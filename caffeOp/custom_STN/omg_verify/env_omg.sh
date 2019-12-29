@@ -28,11 +28,10 @@
  # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  # POSSIBILITY OF SUCH DAMAGE.
  # ============================================================================
-DDK_PATH=$(cat ../../../../../config.json | grep -Po 'DDK_PATH[" :]+\K[^"]+')
+export DDK_PATH=/home/muser/tools/che/ddk/ddk  # you should change this
 version=`cat $DDK_PATH/ddk_info | jq '.VERSION'`
 echo "$version"
 if [[ $version == \"1.3.* ]];then
-    export DDK_PATH=$(cat ../../../../../config.json | grep -Po 'DDK_PATH[" :]+\K[^"]+')
     export SLOG_PRINT_TO_STDOUT=1
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DDK_PATH/uihost/lib/
     export PYTHONPATH=$DDK_PATH/site-packages
@@ -41,7 +40,6 @@ if [[ $version == \"1.3.* ]];then
     export TVM_AICPU_INCLUDE_PATH=$DDK_PATH/include/inc/tensor_engine
     export TVM_AICPU_OS_SYSROOT=$DDK_PATH/uihost/toolchains/aarch64-linux-gcc6.3/sysroot
 elif [[ $version == \"1.31.* ]];then
-    export DDK_PATH=$(cat ../../../../../config.json | grep -Po 'DDK_PATH[" :]+\K[^"]+')
     export PYTHONPATH=$DDK_PATH/site-packages/te-0.4.0.egg:$DDK_PATH/site-packages/topi-0.4.0.egg
     export LD_LIBRARY_PATH=$DDK_PATH/uihost/lib
     export PATH=$PATH:$DDK_PATH/toolchains/ccec-linux/bin:$DDK_PATH/uihost/bin

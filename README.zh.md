@@ -2,7 +2,7 @@
 
 ## 自定义算子样例
 
-本仓库给出了 34 个自定义算子的样例。
+本仓库给出了 33 个自定义算子的样例。
 
 ### TE 与 TVM 简介
 
@@ -66,13 +66,12 @@ Atlas 300 (Model 3000), Atlas 300 (Model 3010)
 │       ├── custom_squared_difference
 │       ├── custom_subtract
 │       └── custom_truncatemod
-|       |__ custom_yolov3
 └── README.md
 ```
 
 其中，README.md 为本文。
 
-customOp 存放着自定义算子，它包括两部分：tensorflow 算子与 caffe 算子。在所有自定义算子中，SpatialTransformer 通过 MindSpore Studio 开发，其余通过命令行方式开发（因此 SpatialTransformer 的目录结构与其余算子的目录结构有所不同）。另外，custom_yolov3 是使用 Graph 引擎开发的而不是 TE 方法。
+customOp 存放着自定义算子，它包括两部分：tensorflow 算子与 caffe 算子。在所有自定义算子中，SpatialTransformer 通过 MindSpore Studio 开发，其余通过命令行方式开发（因此 SpatialTransformer 的目录结构与其余算子的目录结构有所不同）。
 
 - caffe自定义算子目录，即 ./caffeOp/custom_xxx 的结构为：
 

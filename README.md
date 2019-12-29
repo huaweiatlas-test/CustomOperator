@@ -2,7 +2,7 @@
 
 ## Custom Operator Samples
 
-There are 34 custom operator samples given in this repository.
+There are 33 custom operator samples given in this repository.
 
 ### Introduction to the TE and TVM
 
@@ -72,13 +72,12 @@ The directory structure is as follows.
 │       ├── custom_squared_difference
 │       ├── custom_subtract
 │       └── custom_truncatemod
-|       |__ custom_yolov3
 └── README.md
 ```
 
 In the preceding information, README.md is the main text.
 
-customOp stores the custom operator, which consists of the TensorFlow operator and Caffe operator. In all custom operators, the SpatialTransformer is developed by using the MindSpore Studio, and other operators are developed by using command lines. (Therefore, the directory structure of the SpatialTransformer is different from that of other operators.) In addition, custom_yolov3 is developed using the Graph engine rather than the TE method.
+customOp stores the custom operator, which consists of the TensorFlow operator and Caffe operator. In all custom operators, the SpatialTransformer is developed by using the MindSpore Studio, and other operators are developed by using command lines. (Therefore, the directory structure of the SpatialTransformer is different from that of other operators.) 
 
 - Caffe custom operator directory, that is, the structure of ./caffeOp/custom_xxx is as follows.
 
