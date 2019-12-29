@@ -1,0 +1,40 @@
+name: "custom_Concat"
+input: "data"
+input_dim: 1
+input_dim: 3
+input_dim: 16
+input_dim: 16
+
+layer {
+  name: "conv1"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  convolution_param {
+    num_output: 6
+    pad: 0
+    kernel_size: 1
+    stride: 1
+    bias_term: false
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+  }
+}
+
+layer {
+	bottom: "data"
+	bottom: "conv1"
+	top: "out"
+	name: "custom_Concat"
+	type: "custom_Concat"
+	custom_concat_param {
+		axis: 1
+    }
+}
+

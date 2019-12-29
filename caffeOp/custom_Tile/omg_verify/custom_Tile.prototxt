@@ -1,0 +1,17 @@
+name: "custom_Tile"
+input: "data"
+input_dim: 1
+input_dim: 3
+input_dim: 16
+input_dim: 16
+
+layer {
+	bottom: "data"
+	top: "out"
+	name: "custom_Tile"
+	type: "custom_Tile"
+	custom_tile_param {
+    	tiles: 1
+    }
+}
+

@@ -1,0 +1,16 @@
+name: "custom_Exp"
+input: "data"
+input_dim: 1
+input_dim: 3
+input_dim: 16
+input_dim: 16
+
+layer {
+	bottom: "data"
+	top: "out"
+	name: "custom_Exp"
+	type: "custom_Exp"
+	custom_exp_param {
+    }
+}
+

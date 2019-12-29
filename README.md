@@ -1,151 +1,163 @@
-## 自定义算子样例
+﻿EN|[CN](README.zh.md)
 
-本仓库给出了36个 TE 自定义算子的样例。
+## Custom Operator Samples
 
-### TE 与 TVM 简介
+There are 34 custom operator samples given in this repository.
 
-[TE](https://www.huawei.com/minisite/ascend/cn/filedetail_20.html) （Tensor Engine）是基于 [TVM](https://tvm.ai/about) （Tensor Virtual Machine）的自定义算子开发框架。
+### Introduction to the TE and TVM
 
-TVM 是 [Github 的开源项目](https://github.com/dmlc/tvm)， 旨在将各算子的生成规则进一步抽象，将算子本身分成各个操作原语，在需要的时候加以组合。TVM 会根据算子的计算过程的定义，使用 Schedule 技术和 Codegen 技术，生成对指定硬件的算子。TVM 的相关问题可参考 [TVM Tutorials](https://docs.tvm.ai/tutorials/tensor_expr_get_started.html) 与 [TVM论坛](https://discuss.tvm.ai/)。
+TE (Tensor Engine) is a custom operator development framework based on the [TVM](https://tvm.ai/about) (Tensor Virtual Machine).
 
-TE 是对 TVM 的再次封装，TE 中的函数包括两大类：[TVM原语](https://docs.tvm.ai/api/python/tvm.html) 与 TE-DSL。
+TVM is [an open source project of the Github](https://github.com/dmlc/tvm). It aims to further abstract the generation rules of operators, divide the operators into operation primitives, and combine the operators when necessary. According to the definition of the calculation process of operators, the TVM uses the Schedule technology and the Codegen technology to generate the operator for the specified hardware. For more information about the TVM, see [TVM Tutorials](https://docs.tvm.ai/tutorials/tensor_expr_get_started.html) and [TVM Forum] (https://discuss.tvm.ai/).
 
-在本仓库的算子中，有的采用了 TVM 原语，有的采用了 TE-DSL。
+The TE is the repackage of the TVM. The functions in the TE are classified into two types: [TVM primitive] (https://docs.tvm.ai/api/python/tvm.html) and TE-DSL.
 
-### 文件说明
+In this repository, some operators use the TVM primitive, and some operators use the TE-DSL primitive.
 
-本仓库的目录结构如下：
+### Supported Product
+
+Atlas 300 (Model 3000), Atlas 300 (Model 3010)
+
+### Supported Version
+
+1.3.2.B893
+
+1.31.T15.B150
+
+Supported versions are obtained by the following command:
+
+```bash
+npu-smi info
+```
+
+### Directory Structure
+
+The directory structure is as follows.
 
 ```bash
 .
 ├── customOp
-│   ├── caffeOp
-│   │   ├── custom_Concat
-│   │   ├── custom_Exp
-│   │   ├── custom_Log
-│   │   ├── custom_Power
-│   │   ├── custom_Reduction
-│   │   ├── custom_Tile
-│   │   ├── custom_Upsample
-│   │   └── SpatialTransformer
-│   └── tensorflowOp
-│       ├── custom_abs
-│       ├── custom_batch_matmul
-│       ├── custom_ceil
-│       ├── custom_cumprod
-│       ├── custom_equal
-│       ├── custom_exp
-│       ├── custom_expm1
-│       ├── custom_floor
-│       ├── custom_greater_equal
-│       ├── custom_l2_loss
-│       ├── custom_log
-│       ├── custom_log1p
-│       ├── custom_logical_and
-│       ├── custom_logical_not
-│       ├── custom_maximum
-│       ├── custom_minimum
-│       ├── custom_mod
-│       ├── custom_negative
-│       ├── custom_pow
-│       ├── custom_rint
-│       ├── custom_round
-│       ├── custom_sign
-│       ├── custom_sqrt
-│       ├── custom_square
-│       ├── custom_squared_difference
-│       ├── custom_subtract
-│       ├── custom_tile
-│       └── custom_truncatemod
+│   ├── caffeOp
+│   │   ├── custom_Concat
+│   │   ├── custom_Exp
+│   │   ├── custom_Log
+│   │   ├── custom_Power
+│   │   ├── custom_Reduction
+│   │   ├── custom_Tile
+│   │   ├── custom_Upsample
+│   │   └── SpatialTransformer
+│   └── tensorflowOp
+│       ├── custom_abs
+│       ├── custom_batch_matmul
+│       ├── custom_ceil
+│       ├── custom_equal
+│       ├── custom_exp
+│       ├── custom_expm1
+│       ├── custom_floor
+│       ├── custom_greater_equal
+│       ├── custom_l2_loss
+│       ├── custom_log
+│       ├── custom_log1p
+│       ├── custom_logical_and
+│       ├── custom_logical_not
+│       ├── custom_maximum
+│       ├── custom_minimum
+│       ├── custom_mod
+│       ├── custom_pow
+│       ├── custom_rint
+│       ├── custom_round
+│       ├── custom_sign
+│       ├── custom_sqrt
+│       ├── custom_square
+│       ├── custom_squared_difference
+│       ├── custom_subtract
+│       └── custom_truncatemod
+|       |__ custom_yolov3
 └── README.md
 ```
 
-其中，README.md 为本文。
+In the preceding information, README.md is the main text.
 
-customOp 存放着自定义算子，它包括两部分：tensorflow 算子与 caffe 算子。在所有自定义算子中，SpatialTransformer 通过 MindSpore Studio 开发，其余通过命令行方式开发（因此 SpatialTransformer 的目录结构与其余算子的目录结构有所不同）。
+customOp stores the custom operator, which consists of the TensorFlow operator and Caffe operator. In all custom operators, the SpatialTransformer is developed by using the MindSpore Studio, and other operators are developed by using command lines. (Therefore, the directory structure of the SpatialTransformer is different from that of other operators.) In addition, custom_yolov3 is developed using the Graph engine rather than the TE method.
 
-- caffe自定义算子目录，即 ./caffeOp/custom_xxx 的结构为：
-
-  ```bash
-  .
-  ├── omg_verify
-  │   ├── custom_xxx.caffemodel
-  │   ├── custom_xxx.prototxt
-  │   ├── env_omg.sh
-  │   └── omg.sh
-  ├── operator
-  │   └── custom_xxx.py
-  ├── plugin
-  │   ├── custom_xxx_parser.cpp
-  │   ├── Makefile
-  │   └── proto
-  │       └── caffe
-  │           └── caffe.proto
-  └── README.md
-  ```
-
-  其中，operator 目录下的 custom_xxx.py 为算子代码文件。
-
-  plugin 目录下的 custom_xxx_parser.cpp 为插件代码文件，caffe.proto 里包含了该自定义算子的 message 字段。
-
-  omg_verify 目录下存放着包括该自定义算子的 caffe 网络（包括 custom_xxx.caffemodel 与 custom_xxx.prototxt），以及命令行方式的 OMG （模型转换）的脚本（即 env_omg.sh 与 omg.sh）。
-
-- tensorflow 自定义算子目录，即 ./tensorflowOp/custom_xxx 的结构为：
+- Caffe custom operator directory, that is, the structure of ./caffeOp/custom_xxx is as follows.
 
   ```bash
   .
   ├── omg_verify
-  │   ├── custom_xxx.pb
-  │   ├── env_te.sh
-  │   └── omg.sh
+  │   ├── custom_xxx.caffemodel
+  │   ├── custom_xxx.prototxt
+  │   ├── env_omg.sh
+  │   └── omg.sh
   ├── operator
-  │   └── custom_xxx.py
+  │   └── custom_xxx.py
   ├── plugin
-  │   ├── custom_xxx_tf_parser.cpp
-  │   └── Makefile
+  │   ├── custom_xxx_parser.cpp
+  │   ├── Makefile
+  │   └── proto
+  │       └── caffe
+  │           └── caffe.proto
   └── README.md
   ```
 
-  其中，operator 目录下的 custom_xxx.py 为算子代码文件。
+  The custom_xxx.py file in the operator directory is the operator code file.
 
-  plugin 目录下的 custom_xxx_tf_parser.cpp 为插件代码文件。
+  The custom_xxx_parser.cpp file in the plugin directory is the plug-in code file. The caffe.proto file contains the message field of the custom operator.
 
-  omg_verify 目录下存放着包括该自定义算子的 tensorflow 网络（即 custom_xxx.pb），以及命令行方式的 OMG（模型转换）的脚本（即 env_te.sh 与 omg.sh）。
+  The omg_verify directory stores the Caffe network (including custom_xxx.caffemodel and custom_xxx.prototxt) that contains the custom operator and the OMG (model conversion) script (env_omg.sh and omg.sh) in command line mode.
 
-### 插件编译
+- TensorFlow custom operator directory, that is, the structure of ./tensorflowOp/custom_xxx is as follows.
 
-- 对于 caffe 算子：
+  ```bash
+  .
+  ├── omg_verify
+  │   ├── custom_xxx.pb
+  │   ├── env_te.sh
+  │   └── omg.sh
+  ├── operator
+  │   └── custom_xxx.py
+  ├── plugin
+  │   ├── custom_xxx_tf_parser.cpp
+  │   └── Makefile
+  └── README.md
+  ```
 
-  1）修改 custom_xxx/plugin/ 的 Makefile 文件中的 DDK 路径（位于第12行）。
+  The custom_xxx.py file in the operator directory is the operator code file.
 
-  2）修改 custom_xxx/omg_verify/env_omg.sh 的 DDK_PATH，并执行 source env_omg.sh。
+  The custom_xxx_tf_parser.cpp file in the plugin directory is the plug-in code file.
 
-  3）在 custom_xxx/plugin/ 目录下执行 make clean; make。
+  The omg_verify directory stores the TensorFlow network (custom_xxx.pb) that contains the custom operator and the OMG (model conversion) script (env_te.sh and omg.sh) in command line mode.
 
-- 对于 tensorflow 算子：
+### Plug-In Compilation
 
-  1）修改 custom_xxx/plugin/ 的 Makefile 文件中的 DDK 路径（位于第17行）。
+- Caffe Operator:
 
-  2）修改 custom_xxx/omg_verify/env_te.sh 的 DDK_PATH，并执行 source env_te.sh。
+  1) Modify the DDK path in the makefile file of the custom_xxx/plugin/ directory.
 
-  3）在 custom_xxx/plugin/ 目录下执行 make clean; make。
+  2) Execute the source env_omg.sh file to set environment variables.
 
-### OMG（模型转换）
+  3) Run make clean;make in the custom_xxx/plugin/ directory.
 
-下面介绍通过命令行方式进行 OMG（模型转换）。
+- TensorFlow Operator:
 
-- 对于 caffe 算子：
+  1) Modify the DDK path in the makefile file of the custom_xxx/plugin/ directory.
 
-  1）修改 custom_xxx/omg_verify/env_omg.sh 的 DDK_PATH。
+  2) Execute the source env_omg.sh file to set environment variables.
 
-  2）修改 omg.sh 的 DDK_PATH 与 ddk_version 参数。
+  3) Run make clean;make in the custom_xxx/plugin/ directory.
 
-  3）在 custom_xxx/omg_verify/ 目录下依次执行 source env_omg.sh 与 bash omg.sh。
+### OMG (Model Conversion)
 
-- 对于 tensorflow 算子：
+Based on the plug-in compilation, the following describes how to perform the OMG (model conversion) in command line mode.
 
-  1）修改 custom_xxx/omg_verify/env_omg.sh 的 DDK_PATH。
+- Caffe Operator:
 
-  2）修改 omg.sh 的 ddk_version 参数为实际的 DDK 版本。
-  
-  2）在 custom_xxx/omg_verify/ 目录下依次执行 source env_te.sh 与 bash omg.sh。
+  1) If the new DDK, is used, modify the ddk_version parameter of the omg.sh file. If the DDK runs on the Atlas 300 (Model 3000) or CentOS, the OMG path also needs to be modified.
+
+  2) Execute the source env_omg.sh and bash omg.sh files in sequence in the custom_xxx/omg_verify/ directory.
+
+- TensorFlow Operator:
+
+  1) Modify the value of ddk_version in the omg.sh file to the actual DDK version. If the DDK runs on the Atlas 300 (Model 3000) or CentOS, the OMG path also needs to be modified.
+
+  2) Execute the source env_omg.sh and bash omg.sh files in sequence in the custom_xxx/omg_verify/ directory.
