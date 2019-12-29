@@ -128,7 +128,7 @@ customOp 存放着自定义算子，它包括两部分：tensorflow 算子与 ca
 
   1）修改 custom_xxx/plugin/ 的 Makefile 文件中的 DDK 路径；
 
-  2）执行 source env_omg.sh 设置环境变量；
+  2）修改 env_omg.sh 中的 DDK 路径，执行 source env_omg.sh 设置环境变量；
 
   3）在 custom_xxx/plugin/ 目录下执行 make clean; make。
 
@@ -136,7 +136,7 @@ customOp 存放着自定义算子，它包括两部分：tensorflow 算子与 ca
 
   1）修改 custom_xxx/plugin/ 的 Makefile 文件中的 DDK 路径；
 
-  2）执行 source env_omg.sh 设置环境变量；
+  2）修改 env_omg.sh 中的 DDK 路径，执行 source env_omg.sh 设置环境变量；
 
   3）在 custom_xxx/plugin/ 目录下执行 make clean; make。
 

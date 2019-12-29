@@ -134,7 +134,7 @@ customOp stores the custom operator, which consists of the TensorFlow operator a
 
   1) Modify the DDK path in the makefile file of the custom_xxx/plugin/ directory.
 
-  2) Execute the source env_omg.sh file to set environment variables.
+  2) Modify the DDK path of env_omg.sh, execute the source env_omg.sh file to set environment variables.
 
   3) Run make clean;make in the custom_xxx/plugin/ directory.
 
@@ -142,7 +142,7 @@ customOp stores the custom operator, which consists of the TensorFlow operator a
 
   1) Modify the DDK path in the makefile file of the custom_xxx/plugin/ directory.
 
-  2) Execute the source env_omg.sh file to set environment variables.
+  2) Modify the DDK path of env_omg.sh, execute the source env_omg.sh file to set environment variables.
 
   3) Run make clean;make in the custom_xxx/plugin/ directory.
 
